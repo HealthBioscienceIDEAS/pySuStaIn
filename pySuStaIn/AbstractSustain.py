@@ -107,7 +107,7 @@ class AbstractSustain(ABC):
             self.pool                   = pathos.serial.SerialPool()
 
     #********************* PUBLIC METHODS
-    def run_sustain_algorithm(self, plot=False):
+    def run_sustain_algorithm(self, plot=False, **kwargs):
         # Externally called method to start the SuStaIn algorithm after initializing the SuStaIn class object properly
 
         ml_sequence_prev_EM                 = []
@@ -205,7 +205,7 @@ class AbstractSustain(ABC):
 
             # plot results
             if plot:
-                fig, ax                         = self._plot_sustain_model(samples_sequence, samples_f, n_samples, title_font_size=12)
+                fig, ax                         = self._plot_sustain_model(samples_sequence, samples_f, n_samples, **kwargs)
                 fig.savefig(Path(self.output_folder) / f"{self.dataset_name}_subtype{s}_PVD.png")
                 fig.show()
 
@@ -339,15 +339,16 @@ class AbstractSustain(ABC):
 
         if plot:
             import pandas as pd
-            import pylab
+
             df_loglike                                 = pd.DataFrame(data = loglike_matrix, columns = ["Subtype " + str(i+1) for i in range(self.N_S_max)])
-            df_loglike.boxplot(grid=False, fontsize=15)
+            fig, ax = plt.subplots()
+            df_loglike.boxplot(grid=False, fontsize=15, ax=ax)
             for i in range(self.N_S_max):
                 y                                   = df_loglike[["Subtype " + str(i+1)]]
                 x                                   = np.random.normal(1+i, 0.04, size=len(y)) # Add some random "jitter" to the x-axis
-                pylab.plot(x, y, 'r.', alpha=0.2)
-            pylab.savefig(Path(self.output_folder) / 'Log_likelihoods_cv_folds.png')
-            pylab.show()
+                ax.plot(x, y, 'r.', alpha=0.2)
+            fig.savefig(Path(self.output_folder) / 'Log_likelihoods_cv_folds.png')
+            fig.show()
 
         CVIC                            = np.zeros(self.N_S_max)
 
@@ -374,7 +375,7 @@ class AbstractSustain(ABC):
         return CVIC, loglike_matrix
 
 
-    def combine_cross_validated_sequences(self, N_subtypes, N_folds):
+    def combine_cross_validated_sequences(self, N_subtypes, N_folds, **kwargs):
         # Combine MCMC sequences across cross-validation folds to get cross-validated positional variance diagrams,
         # so that you get more realistic estimates of variance within event positions within subtypes
 
@@ -457,7 +458,7 @@ class AbstractSustain(ABC):
 
         n_samples                           = self.__sustainData.getNumSamples()
         plot_order                          = ml_sequence_EM_full[0,:].astype(int)
-        fig, ax                             = self._plot_sustain_model(samples_sequence_cval, samples_f_cval, n_samples, cval=True, plot_order=plot_order, title_font_size=12)
+        fig, ax                             = self._plot_sustain_model(samples_sequence_cval, samples_f_cval, n_samples, cval=True, plot_order=plot_order, title_font_size=12, **kwargs)
 
         # save and show this figure after all subtypes have been calculcated
         png_filename                        = Path(self.output_folder) / f"{self.dataset_name}_subtype{N_subtypes - 1}_PVD_{N_folds}fold_CV.png"
@@ -1011,7 +1012,7 @@ class AbstractSustain(ABC):
         pass
 
     @abstractmethod
-    def _plot_sustain_model(self, samples_sequence, samples_f, n_samples, cval=False, plot_order=None, title_font_size=10):
+    def _plot_sustain_model(self, samples_sequence, samples_f, n_samples, cval=False, plot_order=None, title_font_size=12, figsize=None):
         pass
 
     @abstractmethod

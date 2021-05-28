@@ -310,7 +310,7 @@ class MixtureSustain(AbstractSustain):
 
         return ml_sequence, ml_f, ml_likelihood, samples_sequence, samples_f, samples_likelihood
 
-    def _plot_sustain_model(self, samples_sequence, samples_f, n_samples, cval=False, plot_order=None, title_font_size=10):
+    def _plot_sustain_model(self, samples_sequence, samples_f, n_samples, cval=False, plot_order=None, title_font_size=12, figsize=None):
 
         temp_mean_f                         = np.mean(samples_f, 1)
         vals                                = np.sort(temp_mean_f)[::-1]
@@ -326,23 +326,18 @@ class MixtureSustain(AbstractSustain):
         
         confus_matrix_plotting              = np.zeros((N_stages, N_stages, N_S))
 
-#         if N_S > 1:
-#             fig, ax                         = plt.subplots(1, N_S)
-#         else:
-#             fig, ax                         = plt.subplots()
         if N_S == 1:
-            fig, ax                         = plt.subplots()
-            total_axes                      = 1;
+            nrows, ncols = 1,1
         elif N_S < 3:
-            fig, ax                         = plt.subplots(1, N_S)
-            total_axes                      = N_S
+            nrows, ncols = 1, N_S
         elif N_S < 7:
-            fig, ax                         = plt.subplots(2, int(np.ceil(N_S / 2)))
-            total_axes                      = 2 * int(np.ceil(N_S / 2))
+            nrows, ncols = 2, int(np.ceil(N_S / 2))
         else:
-            fig, ax                         = plt.subplots(3, int(np.ceil(N_S / 3)))
-            total_axes                      = 3 * int(np.ceil(N_S / 3))
-            
+            nrows, ncols = 3, int(np.ceil(N_S / 3))
+
+        total_axes = nrows * ncols
+        fig, ax = plt.subplots(nrows, ncols, figsize=figsize)
+
         if plot_order is None:
             plot_order                      = samples_sequence[ix[0], :, samples_sequence.shape[2]-1].astype(int)
 
@@ -355,7 +350,7 @@ class MixtureSustain(AbstractSustain):
                 continue
 
             this_samples_sequence           = samples_sequence[ix[i],:,:].T
-		        	
+
             N                               = this_samples_sequence.shape[1]
 
             confus_matrix                   = np.zeros((N, N))
