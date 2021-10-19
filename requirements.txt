@@ -7,5 +7,3 @@ sklearn
 pandas
 pybind11
 tqdm
--e git+https://github.com/ucl-pond/kde_ebm.git#egg=kde_ebm
--e .
