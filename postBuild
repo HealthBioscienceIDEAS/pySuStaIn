@@ -1,0 +1,8 @@
+pip install -e git+https://github.com/ucl-pond/awkde.git#egg=awkde
+pip install -e git+https://github.com/ucl-pond/kde_ebm.git#egg=kde_ebm
+pip install .
+
+jupyter nbconvert "notebooks/SuStaIn tutorial using simulated data.ipynb" --to notebook \
+  --ClearOutputPreprocessor.enabled=True --stdout > "notebooks/sustain_tutorial_with_sim_data.ipynb"
+ 
+ rm "notebooks/SuStaIn tutorial using simulated data.ipynb"
