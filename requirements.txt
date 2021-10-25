@@ -3,7 +3,8 @@ numpy>=1.18
 scipy
 matplotlib>=3.0.0
 pathos
-sklearn
+scikit-learn
+seaborn
 pandas
 pybind11
 awkde @ git+https://github.com/noxtoby/awkde.git
