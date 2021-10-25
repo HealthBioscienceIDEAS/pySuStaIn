@@ -7,6 +7,4 @@ scikit-learn
 seaborn
 pandas
 pybind11
-awkde @ git+https://github.com/noxtoby/awkde.git
-kde_ebm @ git+https://github.com/ucl-pond/kde_ebm.git
 tqdm
