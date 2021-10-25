@@ -5,6 +5,7 @@ matplotlib>=3.0.0
 pathos
 scikit-learn
 seaborn
+statsmodels
 pandas
 pybind11
 tqdm
