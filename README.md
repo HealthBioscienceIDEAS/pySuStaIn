@@ -1,6 +1,6 @@
 pySuStaIn
 ============
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/davecash75/pySuStain/HEAD?urlpath=lab/tree/notebooks)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/healthbioscienceideas/pySuStain/HEAD?urlpath=lab/tree/notebooks)
 
 **Su**btype and **St**age **In**ference, or SuStaIn, is an algorithm for discovery of data-driven groups or "subtypes" in chronic disorders. This repository is the Python implementation of SuStaIn, with the option to describe the subtype progression patterns using either the event-based model, the piecewise linear z-score model or the scored events model.
 
@@ -96,7 +96,7 @@ sustainType can be set to:
 
 SuStaIn Tutorial
 ===============  
-See the jupyter notebook in the notebooks folder for a tutorial on how to use SuStaIn using simulated data.
+See the jupyter notebook in the notebooks folder for a tutorial on how to use SuStaIn using simulated data. You can run them first on Binder without installing any of the code by clicking on the Launch Binder badge above.
 
 Papers
 ============
